@@ -27,3 +27,9 @@ getwd()
 epagas<-read.csv('EPAGAS.csv')
 head(epagas)
 ```
+
+## Task 3
+
+```{r makeMpg}
+mpg<-epagas$MPG
+```
