@@ -12,6 +12,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(lattice)
 ```
 # Lab 2
 
@@ -32,4 +33,34 @@ head(epagas)
 
 ```{r makeMpg}
 mpg<-epagas$MPG
+z<-(mpg-mean(mpg))/(sd(mpg))
+mean(z)
+sd(z)
 ```
+
+Note: 1.058709e-16 is close to working precision such that it is essentially zero.
+
+```{r buildMpgaug}
+mpgaug<-data.frame('mpg' = mpg)
+mpgaug['zscore']<-z
+mpgaug['outlier']<-'NO'
+```
+
+```{r possibleOutliers}
+mpgaug$outlier[abs(mpgaug$zscore)>=2 & abs(mpgaug$zscore)<=3]<-'POSSIBLE'
+mpgaug$mpg[mpgaug$outlier=='POSSIBLE']
+```
+
+```{r definedOutliers}
+mpgaug$outlier[abs(mpgaug$zscore)>3]<-'YES'
+mpgaug$mpg[mpgaug$outlier=='YES']
+```
+
+```{r latticeGraph}
+mycol<- ifelse(mpgaug$outlier=='YES',"Red", ifelse(mpgaug$outlier=='POSSIBLE',"Blue","Black"))
+with(mpgaug,dotplot(~mpg,col=mycol))
+```
+
+## Task 4
+
+
