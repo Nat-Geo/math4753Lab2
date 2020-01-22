@@ -13,6 +13,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(lattice)
+library(dplyr)
+library(ggplot2)
 ```
 # Lab 2
 
@@ -34,11 +36,10 @@ head(epagas)
 ```{r makeMpg}
 mpg<-epagas$MPG
 z<-(mpg-mean(mpg))/(sd(mpg))
-mean(z)
-sd(z)
+head(z)
+print(paste0("mean = ",round(mean(z),digits = 4)),quote=FALSE)
+print(paste0("variance = ", var(z)), quote=FALSE)
 ```
-
-Note: 1.058709e-16 is close to working precision such that it is essentially zero.
 
 ```{r buildMpgaug}
 mpgaug<-data.frame('mpg' = mpg)
@@ -58,9 +59,11 @@ mpgaug$mpg[mpgaug$outlier=='YES']
 
 ```{r latticeGraph}
 mycol<- ifelse(mpgaug$outlier=='YES',"Red", ifelse(mpgaug$outlier=='POSSIBLE',"Blue","Black"))
-with(mpgaug,dotplot(~mpg,col=mycol))
+with(mpgaug,dotplot(~mpg,col=mycol, main = "Plot of mpg values"))
 ```
 
 ## Task 4
 
-
+```{r makeBoxplot, echo=FALSE}
+with(mpgaug,boxplot(mpg, main = , xlab = , col = , horizontal= , notch = )
+```
